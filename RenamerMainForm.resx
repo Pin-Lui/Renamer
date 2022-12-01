@@ -1,0 +1,164 @@
+﻿<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <metadata name="Btn_Search.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="TxB_SeriesSearch.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="CmB_SelectShow.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="CmB_SelectSeason.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="Btn_SelectShow.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="Btn_GenSeasonEPNameList.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="Btn_RenameFilesWithList.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="TxB_Cout.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="PgB_Main.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAICAAAAEAIACoEAAAFgAAACgAAAAgAAAAQAAAAAEAIAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAEECvEBZCsJoWRK/wFkOv/xZDr/8WRK/wFkOvmRBArxAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAABxVxgkXT7biFkix/xZIsf8WSLH/Fkix/xZIsf8WSLH/F0+14SRttgcAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAgs/IoG4HU4RVMtP8VTLT/FlK3/xVMtP8VTLT/FlK3/xVMtP8VTLT/G4LT4CG3
+        8icAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAH7PvUSG08PUbdcv/FVG2/xlnw/8ikNz/FVG2/xVRtv8ikNz/GWfD/xVR
+        tv8adsv/IbTw9CC1708AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAACG08FUjtfH7J7fy/xx3zP8ZZsL/Lbbx/yup6f8VVbn/FVW5/yup
+        6f8ttvH/GWbC/xx3zP8nt/L/I7Xx+yK071IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjtO4sIrXx9Ci38v8suvP/HnnN/x11yv81vvb/N7/2/zGt
+        6/8xrev/N7/2/zW+9v8ddcr/HnnN/yy68/8ot/L/I7Tx8x628yoAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACS18Loot/L/LLrz/zG89P8gftD/Fl69/yiQ
+        2v8voOT/MKDk/zCg5P8voOT/KJDa/xZevf8gf9D/Mbz0/yy68/8ot/L/I7XwtwAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAetPAiJrfx/yu58/8xvPT/Nb/2/yiS
+        3P8VYL7/FWC+/xVgvv8VYL7/FWC+/xVgvv8VYL7/FWC+/yiT3P81v/b/Mbz0/yy58/8mt/H/ILfvIAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACS28k0puPL/L7v0/zS+
+        9f86wff/O771/x54zP8VZMD/FWTA/xVkwP8VZMD/FWTA/xVkwP8fecz/O7/1/zrB9/80vvX/L7v0/ym4
+        8v8ktvJNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJ7fwVSy6
+        8/8yvfX/OMD2/zzC+P9AxPn/Q8X5/zyy7v84qOn/Oanp/zmp6f84qOn/PLLu/0PF+f9AxPn/PML4/zjA
+        9v8yvfX/LLrz/ye38FUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACCm
+        3YEYoNj8Lrv0/zS+9f86wff/PsP4/0PG+v9HyPv/Ssr8/03L/f9OzP3/Tsz9/03L/f9Kyvz/R8j7/0PG
+        +v8+w/j/OsH3/zS+9f8uu/T/GKDX/CCl3YAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAIKbd7hmg1/8vu/T/N7Hj/zpxhf87ZXX/PWZ1/z5ndv9EhJ7/T8j4/1HN/v9Rzf7/T8v9/0WK
+        pv8/aHf/PWZ1/ztldf86boL/Nq/e/y+79P8ZoNf/IKbd7gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAACSt5Bwgpt3/GaDX/zC89P88aXn/Pjs3/z47N/8+Ozf/Pjs3/z47N/9GfZL/U87//1PO
+        //9HiqL/Pjs3/z47N/8+Ozf/Pjs3/z47N/87YGz/MLz0/xmg1/8gpt3/JqrjGwAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAIqfhQyCm3f8Yn9b/MLrx/0hMS/9JRUH/SUVB/0lFQf9JRUH/SUVB/0pJ
+        R/9Rvuj/Ucf1/0lQUP9JRUH/SUVB/0lFQf9JRUH/SUVB/0hIRv8xt+3/GJ/W/yCm3f8ip+FDAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgp983IKbd/xmUxv88gJv/WVRQ/1lUUP9ZVFD/WVRQ/1lU
+        UP9ZVFD/WVRQ/1Rqcf9Sb3n/WVRQ/1lUUP9ZVFD/WVRQ/1lUUP9ZVFD/WVRQ/zx/mf8ZlMX/IKbd/yKo
+        4jUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgpd2OI4m091tXUv9rZmH/a2Zh/2tm
+        Yf9rZmH/a2Zh/2tmYf9rZmH/a2Zh/2tmYf9rZmH/a2Zh/2tmYf9rZmH/a2Zh/2tmYf9rZmH/XFZS/yOK
+        tPchptyMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAnuvUaK7nz/zG8
+        9P82v/b/O77x/z625v9AsN3/QqrT/0Oix/9EnL7/RJy+/0Oix/9CqtP/QLDd/z625v87vvH/Nr/2/zG8
+        9P8rufP/ILX0GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEA4IEI/
+        OmE3cYfzO2Jw/z9PVP9BPzz/QT46/0E+Ov9BPjr/QT46/0E+Ov9BPjr/QT46/0E+Ov9BPjr/QT46/0E/
+        PP8/T1T/O2Jw/zdxiPNCPzphQEA4IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABNR0IyTEhDlE1I
+        RNxMSET/TEhE/0xIRP9MSET/TEhE/0xIRP9MSET/TEhE/0xIRP9MSET/TEhE/0xIRP9MSET/TEhE/0xI
+        RP9MSET/TEhE/0xIRP9MSET/TEhE/0xIRP9MSET/TEhE20xJRJNOSUQxAAAAAAAAAAAAAAAAVVNPflZT
+        Tv9WU07/VlNO/1ZTTv9WU07/VlNO/1ZTTv9WU07/VlNO/1ZTTv9WU07/VlNO/1ZTTv9WU07/VlNO/1ZT
+        Tv9WU07/VlNO/1ZTTv9WU07/VlNO/1ZTTv9WU07/VlNO/1ZTTv9WU07/VlNO/1ZTTv9WVE6AAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABunzTegcQz/4HEM/+BxDP/gcQz/4HEM/+BxDP/gcQz/4HE
+        M/+BxDP/gcQz/4HEM/+BxDP/gcQz/4HEM/+BxDP/gcQz/26fNN0AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG+bNc2BxDP/gcQz/4HEM/+BxDP/gcQz/4HE
+        M/+BxDP/gcQz/4HEM/+BxDP/gcQz/4HEM/+BxDP/gcQz/4HEM/+BxDP/bps2zAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZoY9p3CbOf9wmzn/cJs5/3Cb
+        Of9wmzn/cJs5/3CbOf9wmzn/cJs5/3CbOf9wmzn/cJs5/3CbOf9wmzn/cJs5/3CbOf9nhzymAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABVUEtpVVFM/1VR
+        TP9VUUz/VVFM/1VRTP9VUUz/VVFM/1VRTP9VUUz/VVFM/1VRTP9VUUz/VVFM/1VRTP9VUUz/VVFM/1ZR
+        TGgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFxZ
+        U1ZdWVT/XVlU/11ZVP9dWVT/XVlU/11ZVP9dWVT/XVlU/11ZVP9dWVT/XVlU/11ZVP9dWVT/XVlU/11Z
+        VP9dWVT/XVpUVQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAZ19bQ2VhW/9lYVv/ZWFb/2VhW/9lYVv/ZWFb/2VhW/9lYVv/ZWFb/2VhW/9lYVv/ZWFb/2Vh
+        W/9lYVv/ZWFb/2VhW/9kYV1CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAABwamUwbmlj/25pY/9uaWP/bmlj/25pY/9uaWP/bmlj/25pY/9uaWP/bmlj/25p
+        Y/9uaWP/bmlj/25pY/9uaWP/bmlj/21nYi8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAHZ2Yg12cWrndnFq/3Zxav92cWr/dnFq/3Zxav92cWr/dnFq/3Zx
+        av92cWr/dnFq/3Zxav92cWr/dnFq/3Zxav92cWrndnZiDQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAA////////////8A///+AH///AA///gAH//wAA//4AAH/+AAB//AAAP/wA
+        AD/8AAA/+AAAH/gAAB/wAAAP8AAAD/AAAA/4AAAf/AAAP/gAAB/AAAADgAAAAf4AAH/+AAB//gAAf/4A
+        AH/+AAB//gAAf/4AAH/+AAB///////////8=
+</value>
+  </data>
+</root>
