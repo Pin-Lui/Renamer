@@ -1,3 +1,6 @@
+using System.Diagnostics;
+using System.Text.RegularExpressions;
+
 namespace Renamer
 {
     public partial class RenamerMainForm : Form
@@ -11,7 +14,9 @@ namespace Renamer
         private const string DialogBoxTitel = "Rename Files to This?";
         private const string RenameSuccessMsg = "Files Renamed!";
         private const string ListGeneratedSuccessMsg = "EP List.txt generated!";
+        private const string NoFilesFoundMsg = "No Files Found!";
         private const string PathAllShowtxt = "https://epguides.com/common/allshows.txt";
+        private const string FileExtension = "mkv";
         private readonly string AppDir;
         private readonly string PathToListTXT;
         private readonly string PathToListCSV;
@@ -28,6 +33,8 @@ namespace Renamer
             InitializeComponent();
             TxB_SeriesSearch.ForeColor = Color.Gray;
             TxB_SeriesSearch.Text = TutMsg;
+            TxB_FileExtension.ForeColor = Color.Gray;   
+            TxB_FileExtension.Text = FileExtension;
             gui = this;
             AppDir = (AppDomain.CurrentDomain.BaseDirectory);
             PathToListTXT = (AppDir + "\\list.txt");
@@ -300,22 +307,30 @@ namespace Renamer
                 sNumber = Convert.ToString(sNr);
             }
 
-            List<string> fileName = FileNameHandler.FileNamePreview(TxB_SeriesSearch.Text, sNumber);
+            List<string> fileName = FileNameHandler.FileNamePreview(TxB_SeriesSearch.Text, sNumber, GetFileExtension());
             var message = string.Join(Environment.NewLine, fileName);
 
+            if (string.IsNullOrEmpty(message) || string.IsNullOrWhiteSpace(message))
+            {
+                Cout(NoFilesFoundMsg);
+                GuiActivated(true);
+                return; 
+            }
+
             DialogResult dialogResult = MessageBox.Show(message, DialogBoxTitel, MessageBoxButtons.YesNo);
+
             if (dialogResult == DialogResult.Yes)
             {
                 if (sNr <= 9)
                 {
                     string seasonNr = "0" + Convert.ToString(sNr);
-                    FileNameHandler.RenameFilesWithList(TxB_SeriesSearch.Text, seasonNr);
+                    FileNameHandler.RenameFilesWithList(TxB_SeriesSearch.Text, seasonNr, GetFileExtension());
                     Cout(RenameSuccessMsg);
                 }
                 else
                 {
                     string seasonNr = Convert.ToString(sNr);
-                    FileNameHandler.RenameFilesWithList(TxB_SeriesSearch.Text, seasonNr);
+                    FileNameHandler.RenameFilesWithList(TxB_SeriesSearch.Text, seasonNr, GetFileExtension());
                     Cout(RenameSuccessMsg);
                 }
 
@@ -341,6 +356,25 @@ namespace Renamer
                 TxB_SeriesSearch.Text = "";
                 TxB_SeriesSearch.ForeColor = Color.Black;
             }
+        }
+
+        private void TxB_FileExtension_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(TxB_FileExtension.Text) && TxB_FileExtension.Text.Equals(FileExtension))
+            {
+                TxB_FileExtension.Text = "mkv";
+                TxB_FileExtension.ForeColor = Color.Black;
+            }
+        }
+
+        private void TxB_Cout_DoubleClick(object sender, EventArgs e)
+        {
+            Process.Start("explorer.exe", AppDir);
+        }
+
+        private void CmB_SelectShow_TextChanged(object sender, EventArgs e)
+        {
+            TxB_SeriesSearch.Text = CmB_SelectShow.Text;
         }
 
         #endregion Events
@@ -419,6 +453,29 @@ namespace Renamer
             }
         }
 
+        private string GetFileExtension()
+        {
+            string pattern = @"^[a-zA-Z0-9]+$";
+            string result;
+            if (TxB_FileExtension.Text.Length == 3 && Regex.IsMatch(TxB_FileExtension.Text, pattern))
+            {
+                // TxB_FileExtension.Text is 3 characters long and contains only letters and numbers
+                result = "." + TxB_FileExtension.Text;
+            }
+            else
+            {
+                // TxB_FileExtension.Text is not 3 characters long or contains characters that are not letters or numbers
+                TxB_FileExtension.ForeColor = Color.Gray;
+                TxB_FileExtension.Text = FileExtension;
+                result = ".mkv";
+            }
+
+            return result;
+
+        }
+
         #endregion Private()
+
+        
     }
 }

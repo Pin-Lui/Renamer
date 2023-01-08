@@ -19,6 +19,7 @@ namespace Renamer
         #endregion Felder
 
         #region Konstruktor
+
         public CSVParser()
         {
             AppDir = (AppDomain.CurrentDomain.BaseDirectory);
@@ -139,13 +140,16 @@ namespace Renamer
 
         private void CleanListTxt()
         {
+            // Return if the file does not exist
             if (!File.Exists(PathToListTXT))
             {
                 return;
             }
+            
+            // Clear the contents of the file by writing an empty string to it            
             try
             {
-                File.Delete(PathToListTXT);
+                File.WriteAllText(PathToListTXT, string.Empty);
             }
             catch (IOException ioExp)
             {
@@ -166,252 +170,256 @@ namespace Renamer
 
         private int SearchSeasonSize()
         {
+            // Retrieve the list of episodes for the specified show
             List<CSVEpisodes> EpisodeBuffer = AllEpisodesBuffer(ShowTitel);
-            if (EpisodeBuffer == null)
+
+            // Return 0 if the list is null or empty
+            if (EpisodeBuffer == null || EpisodeBuffer.Count == 0)
             {
                 return 0;
             }
 
-            List<int> ResultsInt = new List<int>();
-            foreach (var item in EpisodeBuffer)
-            {
-                ResultsInt.Add(Convert.ToInt32(item.Season));
-            }
-            if (ResultsInt == null)
-            {
-                return 0;
-            }
-            int Result = ResultsInt.Max();
-            return Result;            
-        }
+            // Find the maximum season number using LINQ's Max() method
+            int maxSeason = EpisodeBuffer.Max(item => Convert.ToInt32(item.Season));
+
+            return maxSeason;
+        }       
 
         private string GetEpsiodeCsvUrl()
         {
             List<CSVAllShows> allshowsBuffer = GetAllShowBuffer();
-            CSVAllShows _SearchTitel = allshowsBuffer.Find(x => x.Titel == ShowTitel);
-            if (_SearchTitel == null)
+
+            // Use FirstOrDefault() to find the first show with the specified title, if it exists
+            CSVAllShows searchShow = allshowsBuffer.FirstOrDefault(show => show.Titel == ShowTitel);
+
+            // Return null if the show was not found
+            if (searchShow == null)
             {
                 Cout("Cound not find " + ShowTitel);
                 return null;
             }
 
-            string MazeNr = _SearchTitel.TVmaze;
+            // Construct the URL using the TVmaze number of the show
+            string MazeNr = searchShow.TVmaze;
             string PathToEpisodeMaze = ("https://epguides.com/common/exportToCSVmaze.asp?maze=" + MazeNr);
             return PathToEpisodeMaze;
-        }
+
+        }        
 
         private List<CSVAllShows> GetAllShowBuffer()
         {
+            // Return null if the file does not exist
             if (!File.Exists(PathToAllShowCSV))
             {
                 return null;
             }
 
-            List<CSVAllShows> allshowsBuffer = new();
-            var lines = File.ReadAllLines(PathToAllShowCSV).Where(arg => !string.IsNullOrWhiteSpace(arg));
-            File.WriteAllLines(PathToAllShowCSV, lines);
+            // Initialize the list of shows
+            List<CSVAllShows> allshowsBuffer = new List<CSVAllShows>();
 
-            using (StreamReader _StreamReader = File.OpenText(PathToAllShowCSV))
+            // Use CsvHelper to read the CSV file and parse the records
+            using (var reader = new StreamReader(PathToAllShowCSV))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                var csv = new CsvReader(_StreamReader, CultureInfo.InvariantCulture);
+                // Read the header record and store the indices of the relevant columns
                 csv.Read();
                 csv.ReadHeader();
-                string[] header = csv.Context.Reader.HeaderRecord;
-                var columnExtractedTitle = "title";
-                var columnExtractedDirectory = "directory";
-                var columnExtractedTvrage = "tvrage";
-                var columnExtractedID = "TVmaze";
-                var columnExtractedStartDate = "start date";
-                var columnExtractedEndDate = "end date";
-                var columnExtractedNoE = "number of episodes";
-                var columnExtractedRunTime = "run time";
-                var columnExtractedNetwork = "network";
-                var columnExtractedCountry = "country";
-                var columnExtractedOnhiatus = "onhiatus";
-                var columnExtractedOnhiatusdesc = "onhiatusdesc";
-                int extractedIndexTitle = Array.IndexOf(header, columnExtractedTitle);
-                int extractedIndexDirectory = Array.IndexOf(header, columnExtractedDirectory);
-                int extractedIndexTvrage = Array.IndexOf(header, columnExtractedTvrage);
-                int extractedIndexID = Array.IndexOf(header, columnExtractedID);
-                int extractedIndexStartDate = Array.IndexOf(header, columnExtractedStartDate);
-                int extractedIndexEndDate = Array.IndexOf(header, columnExtractedEndDate);
-                int extractedIndexNoE = Array.IndexOf(header, columnExtractedNoE);
-                int extractedIndexRunTime = Array.IndexOf(header, columnExtractedRunTime);
-                int extractedIndexNetwork = Array.IndexOf(header, columnExtractedNetwork);
-                int extractedIndexCountry = Array.IndexOf(header, columnExtractedCountry);
-                int extractedIndexOnhiatus = Array.IndexOf(header, columnExtractedOnhiatus);
-                int extractedIndexOnhiatusdesc = Array.IndexOf(header, columnExtractedOnhiatusdesc);
+                int indexTitle = csv.GetFieldIndex("title");
+                int indexDirectory = csv.GetFieldIndex("directory");
+                int indexTvrage = csv.GetFieldIndex("tvrage");
+                int indexID = csv.GetFieldIndex("TVmaze");
+                int indexStartDate = csv.GetFieldIndex("start date");
+                int indexEndDate = csv.GetFieldIndex("end date");
+                int indexNoE = csv.GetFieldIndex("number of episodes");
+                int indexRunTime = csv.GetFieldIndex("run time");
+                int indexNetwork = csv.GetFieldIndex("network");
+                int indexCountry = csv.GetFieldIndex("country");
+                int indexOnhiatus = csv.GetFieldIndex("onhiatus");
+                int indexOnhiatusdesc = csv.GetFieldIndex("onhiatusdesc");
 
+                // Read the rest of the records
                 while (csv.Read())
                 {
-                    string[] row = csv.Context.Reader.Parser.Record;
-
-                    string Title = row[extractedIndexTitle];
-                    string Directory = row[extractedIndexDirectory];
-                    string Tvrage = row[extractedIndexTvrage];
-                    string ID = row[extractedIndexID];
-                    string StartDate = row[extractedIndexStartDate];
-                    string EndDate = row[extractedIndexEndDate];
-                    string NoE = row[extractedIndexNoE];
-                    string RunTime = row[extractedIndexRunTime];
-                    string Network = row[extractedIndexNetwork];
-                    string Country = row[extractedIndexCountry];
-                    string Onhiatus = row[extractedIndexOnhiatus];
-                    string Onhiatusdesc = row[extractedIndexOnhiatusdesc];
-
-                    allshowsBuffer.Add(new CSVAllShows
+                    // Create a new show object and populate its fields from the CSV record
+                    CSVAllShows show = new CSVAllShows
                     {
-                        Titel = Title,
-                        Directory = Directory,
-                        Tvrage = Tvrage,
-                        TVmaze = ID,
-                        StartDate = StartDate,
-                        EndDate = EndDate,
-                        NumberOfEpisodes = NoE,
-                        RunTime = RunTime,
-                        Network = Network,
-                        Country = Country,
-                        Onhiatus = Onhiatus,
-                        Onhiatusdesc = Onhiatusdesc,
-                    });
+                        Titel = csv.GetField(indexTitle),
+                        Directory = csv.GetField(indexDirectory),
+                        Tvrage = csv.GetField(indexTvrage),
+                        TVmaze = csv.GetField(indexID),
+                        StartDate = csv.GetField(indexStartDate),
+                        EndDate = csv.GetField(indexEndDate),
+                        NumberOfEpisodes = csv.GetField(indexNoE),
+                        RunTime = csv.GetField(indexRunTime),
+                        Network = csv.GetField(indexNetwork),
+                        Country = csv.GetField(indexCountry),
+                        Onhiatus = csv.GetField(indexOnhiatus),
+                        Onhiatusdesc = csv.GetField(indexOnhiatusdesc)
+                    };
 
+                    // Add the show to the list
+                    allshowsBuffer.Add(show);
                 }
             }
-                
+
             return allshowsBuffer;
-            
         }
 
         private List<CSVEpisodes> GetAllEpisodeBuffer()
         {
+            // Check if the CSV file exists
             if (!File.Exists(PathToListCSV))
             {
                 return null;
             }
-            
+
+            // Clean the CSV file of HTML characters
             if (!CleanCsvFromHtml())
             {
                 return null;
-            }           
+            }
 
-            List<CSVEpisodes> allEpisodeBuffer = new();
-            using (StreamReader _StreamReader = File.OpenText(PathToListCSV))
+            // Create a list to store the episodes
+            var allEpisodeBuffer = new List<CSVEpisodes>();
+
+            // Open the CSV file using CSVHelper
+            using (var reader = new StreamReader(PathToListCSV))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                var csv = new CsvReader(_StreamReader, CultureInfo.InvariantCulture);
+                // Read the header row
                 csv.Read();
                 csv.ReadHeader();
-                string[] header = csv.Context.Reader.HeaderRecord;
 
-                var columnExtractedNumber = "number";
-                var columnExtractedSeason = "season";
-                var columnExtractedEpisode = "episode";
-                var columnExtractedAirdate = "airdate";
-                var columnExtractedTitle = "title";
-                var columnExtractedTvmazeLink = "tvmaze link";
-
-                int extractedIndexNumber = Array.IndexOf(header, columnExtractedNumber);
-                int extractedIndexSeason = Array.IndexOf(header, columnExtractedSeason);
-                int extractedIndexEpisode = Array.IndexOf(header, columnExtractedEpisode);
-                int extractedIndexAirdate = Array.IndexOf(header, columnExtractedAirdate);
-                int extractedIndexTitle = Array.IndexOf(header, columnExtractedTitle);
-                int extractedIndexTvmazeLink = Array.IndexOf(header, columnExtractedTvmazeLink);
-
+                // Read each row of the CSV file
                 while (csv.Read())
                 {
-                    string[] row = csv.Context.Reader.Parser.Record;
-
-                    string Season = row[extractedIndexSeason];
-                    string Episode = row[extractedIndexEpisode];
-                    string Airdate = row[extractedIndexAirdate];
-                    string Title = row[extractedIndexTitle];
-                    string TvMazeLink = row[extractedIndexTvmazeLink];
-
-                    allEpisodeBuffer.Add(new CSVEpisodes
+                    // Create a new CSVEpisodes object to store the data for the row
+                    var episode = new CSVEpisodes
                     {
-                        EPNumber = Title,
-                        Season = Season,
-                        Episode = Episode,
-                        Airdate = Airdate,
-                        Title = Title,
-                        TvmazeLink = TvMazeLink,
-                    });
+                        EPNumber = csv.GetField("number"),
+                        Season = csv.GetField("season"),
+                        Episode = csv.GetField("episode"),
+                        Airdate = csv.GetField("airdate"),
+                        Title = csv.GetField("title"),
+                        TvmazeLink = csv.GetField("tvmaze link"),
+                    };
 
+                    // Add the episode to the list
+                    allEpisodeBuffer.Add(episode);
                 }
             }
 
+            // Return the list of episodes
             return allEpisodeBuffer;
         }
 
         private bool ConvertAllSeasonToTXT()
         {
+            // Clean the list of TXT files
             CleanListTxt();
 
-            List<string> episodeNames = new();
-            List<CSVEpisodes> EpisodeListBuffer = GetAllEpisodeBuffer();
+            // Get the list of episodes from the CSV file
+            List<CSVEpisodes> episodeListBuffer = GetAllEpisodeBuffer();
 
-            if (EpisodeListBuffer == null || EpisodeListBuffer.Count == 0)
+            // Check if the episode list is null or empty
+            if (episodeListBuffer == null || episodeListBuffer.Count == 0)
             {
                 Cout("Could not find the buffer");
                 return false;
             }
 
-            foreach (var item in EpisodeListBuffer)
+            // Create a list to store the filtered episode names
+            var episodeNames = new List<string>();
+
+            // Iterate through each episode in the list
+            foreach (var item in episodeListBuffer)
             {
+                // Remove unwanted characters from the episode title
                 string pattern = @"^\\.+";
                 string pattern2 = @"[\\\\/:*?\<>|]";
                 string unfiltered = item.Title;
                 string filtered1 = Regex.Replace(unfiltered, pattern, string.Empty);
                 string filtered2 = Regex.Replace(filtered1, pattern2, string.Empty);
+
+                // Add the filtered episode name to the list
                 episodeNames.Add(filtered2);
             }
+
+            // Convert the list of episode names to an array
             string[] result = episodeNames.ToArray();
+
+            // Write the episode names to a TXT file
             WriteAllLines(PathToListTXT, result);
 
+            // Clean the CSV file
             CleanCSV();
 
+            // Check if the TXT file was created successfully
             if (!CheckForFile(PathToListTXT))
             {
                 return false;
             }
 
             return true;
-        }
+        }       
 
         private bool ConvertSelectedSeasonToTXT()
         {
+            // Clean the list of TXT files
             CleanListTxt();
 
+            // Try to parse the season number from the SeasonNr string
             if (!int.TryParse(SeasonNr, out int sNr))
             {
+                // If parsing fails, print an error message and return false
                 Cout("Could not Parse the Season Nr. Try Again!");
                 return false;
             }
 
+            // Convert the season number to a string
             string ConfSeasonNr = sNr.ToString();
-            List<string> episodeNames = new();
-            List<CSVEpisodes> EpisodeListBuffer = GetAllEpisodeBuffer();
-            List<CSVEpisodes> SelectedEpisodes = EpisodeListBuffer.FindAll(x => x.Season == ConfSeasonNr);
 
-            if (SelectedEpisodes == null || SelectedEpisodes.Count == 0)
+            // Get the list of episodes from the CSV file
+            List<CSVEpisodes> episodeListBuffer = GetAllEpisodeBuffer();
+
+            // Find all episodes in the specified season
+            List<CSVEpisodes> selectedEpisodes = episodeListBuffer.FindAll(x => x.Season == ConfSeasonNr);
+
+            // Check if the selected episodes list is null or empty
+            if (selectedEpisodes == null || selectedEpisodes.Count == 0)
             {
+                // If the list is empty, print an error message and return false
                 Cout("Could not find the Season Nr. Try Again!");
                 return false;
             }
 
-            foreach (var item in SelectedEpisodes)
+            // Create a list to store the filtered episode names
+            List<string> episodeNames = new();
+
+            // Iterate through each selected episode
+            foreach (var item in selectedEpisodes)
             {
+                // Remove leading dots and unwanted characters from the episode title
                 string pattern = @"^\\.+";
                 string pattern2 = @"[\\\\/:*?\<>|]";
                 string unfiltered = item.Title;
                 string filtered1 = Regex.Replace(unfiltered, pattern, string.Empty);
                 string filtered2 = Regex.Replace(filtered1, pattern2, string.Empty);
+
+                // Add the filtered episode name to the list
                 episodeNames.Add(filtered2);
             }
+
+            // Convert the list of episode names to an array
             string[] result = episodeNames.ToArray();
+
+            // Write the episode names to a TXT file
             WriteAllLines(PathToListTXT, result);
 
+            // Clean the CSV file
             CleanCSV();
 
+            // Check if the TXT file was created successfully
             if (!CheckForFile(PathToListTXT))
             {
                 return false;
@@ -422,48 +430,83 @@ namespace Renamer
 
         private bool CleanCsvFromHtml()
         {
+            // Check if the CSV file exists
             if (!File.Exists(PathToListCSV))
             {
+                // If it doesn't, return false
                 return false;
             }
 
+            // Initialize a pattern to match HTML tags
             string pattern = @"<(.|\n)*?>";
+
+            // Initialize a pattern to match the string "List Output"
             string pattern2 = @"(List Output)";
+
+            // Initialize a list to store the modified lines
             List<string> linebuffer = new();
 
+            // Read all the lines from the CSV file and filter out empty lines
             var _lines = File.ReadAllLines(PathToListCSV).Where(arg => !string.IsNullOrWhiteSpace(arg));
 
+            // Loop through the lines
             foreach (var line in _lines)
             {
+                // Remove the HTML tags from the line
                 string result = Regex.Replace(line, pattern, string.Empty);
+
+                // Remove the string "List Output" from the line
                 string finalresultstring = Regex.Replace(result, pattern2, string.Empty);
+
+                // Add the modified line to the list
                 linebuffer.Add(finalresultstring);
             }
 
+            // Convert the list to an array
             string[] finalresult = linebuffer.ToArray();
+
+            // Write the array to the CSV file
             File.WriteAllLines(PathToListCSV, finalresult);
 
+            // Read all the lines from the CSV file and filter out empty lines
             var _lines2 = File.ReadAllLines(PathToListCSV).Where(arg => !string.IsNullOrWhiteSpace(arg));
+
+            // Write the filtered lines to the CSV file
             File.WriteAllLines(PathToListCSV, _lines2);
+
+            // Return true
             return true;
         }
 
         private static void WriteAllLines(string path, params string[] lines)
         {
-            if (path == null)   throw new ArgumentNullException(nameof(path));
-            if (lines == null)  throw new ArgumentNullException(nameof(lines));
+            // Check if the path is null
+            if (path == null)
+            {
+                // If it is, throw an ArgumentNullException
+                throw new ArgumentNullException(nameof(path));
+            }
 
-            using var stream = File.OpenWrite(path);
+            // Check if the lines array is null
+            if (lines == null)
+            {
+                // If it is, throw an ArgumentNullException
+                throw new ArgumentNullException(nameof(lines));
+            }
+
+            // Open a stream for writing to the file
+            using (var stream = File.OpenWrite(path))
+            {
+                // Set the length of the stream to 0
                 stream.SetLength(0);
-                using var writer = new StreamWriter(stream);
-                    if (lines.Length > 0)
-                    {
-                        for (var i = 0; i < lines.Length - 1; i++)
-                        {
-                            writer.WriteLine(lines[i]);
-                        }
-                        writer.Write(lines[^1]);
-                    }
+
+                // Create a StreamWriter to write to the stream
+                using (var writer = new StreamWriter(stream))
+                {
+                    // Write all the lines to the stream
+                    writer.Write(string.Join(Environment.NewLine, lines));
+                }
+            }
         }
 
         #endregion Private()
