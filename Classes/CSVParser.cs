@@ -35,7 +35,7 @@ namespace Renamer
             PathToListCSV = (AppDir + "\\list.csv");
             PathToAllShowCSV = (AppDir + "\\allshows.csv");
 
-            if (string.IsNullOrWhiteSpace(showTitel))   throw new ArgumentNullException(nameof(showTitel), "Show Titel");            
+            if (string.IsNullOrWhiteSpace(showTitel)) throw new ArgumentNullException(nameof(showTitel), "Show Titel");
             ShowTitel = showTitel;
         }
 
@@ -46,8 +46,8 @@ namespace Renamer
             PathToListCSV = (AppDir + "\\list.csv");
             PathToAllShowCSV = (AppDir + "\\allshows.csv");
 
-            if (string.IsNullOrWhiteSpace(showTitel))   throw new ArgumentNullException(nameof(showTitel), "Show Titel");
-            if (string.IsNullOrWhiteSpace(episodeNr))   throw new ArgumentNullException(nameof(episodeNr), "Episode Number");
+            if (string.IsNullOrWhiteSpace(showTitel)) throw new ArgumentNullException(nameof(showTitel), "Show Titel");
+            if (string.IsNullOrWhiteSpace(episodeNr)) throw new ArgumentNullException(nameof(episodeNr), "Episode Number");
 
             ShowTitel = showTitel;
             SeasonNr = episodeNr;
@@ -69,8 +69,8 @@ namespace Renamer
         }
 
         public static int GetSeasonSize(string showTitel)
-        { 
-            return  new CSVParser(showTitel).SearchSeasonSize();    
+        {
+            return new CSVParser(showTitel).SearchSeasonSize();
         }
 
         public static bool GetTXTFile(string showTitel)
@@ -95,7 +95,7 @@ namespace Renamer
 
         public static void CleanCSVs()
         {
-           new CSVParser().CleanCSV();
+            new CSVParser().CleanCSV();
         }
 
         public static string GetEpsiodeCsvUrls(string showTitel)
@@ -111,7 +111,7 @@ namespace Renamer
         {
             if (!File.Exists(PathToAllShowCSV))
             {
-                return; 
+                return;
             }
             try
             {
@@ -145,7 +145,7 @@ namespace Renamer
             {
                 return;
             }
-            
+
             // Clear the contents of the file by writing an empty string to it            
             try
             {
@@ -183,7 +183,7 @@ namespace Renamer
             int maxSeason = EpisodeBuffer.Max(item => Convert.ToInt32(item.Season));
 
             return maxSeason;
-        }       
+        }
 
         private string GetEpsiodeCsvUrl()
         {
@@ -204,7 +204,7 @@ namespace Renamer
             string PathToEpisodeMaze = ("https://epguides.com/common/exportToCSVmaze.asp?maze=" + MazeNr);
             return PathToEpisodeMaze;
 
-        }        
+        }
 
         private List<CSVAllShows> GetAllShowBuffer()
         {
@@ -215,7 +215,7 @@ namespace Renamer
             }
 
             // Initialize the list of shows
-            List<CSVAllShows> allshowsBuffer = new List<CSVAllShows>();
+            List<CSVAllShows> allshowsBuffer = new();
 
             // Use CsvHelper to read the CSV file and parse the records
             using (var reader = new StreamReader(PathToAllShowCSV))
@@ -241,7 +241,7 @@ namespace Renamer
                 while (csv.Read())
                 {
                     // Create a new show object and populate its fields from the CSV record
-                    CSVAllShows show = new CSVAllShows
+                    CSVAllShows show = new()
                     {
                         Titel = csv.GetField(indexTitle),
                         Directory = csv.GetField(indexDirectory),
@@ -273,7 +273,7 @@ namespace Renamer
                 return null;
             }
 
-            // Clean the CSV file of HTML characters
+            // Delete the CSV file of HTML characters
             if (!CleanCsvFromHtml())
             {
                 return null;
@@ -294,7 +294,7 @@ namespace Renamer
                 while (csv.Read())
                 {
                     // Create a new CSVEpisodes object to store the data for the row
-                    var episode = new CSVEpisodes
+                    CSVEpisodes episode = new()
                     {
                         EPNumber = csv.GetField("number"),
                         Season = csv.GetField("season"),
@@ -351,7 +351,7 @@ namespace Renamer
             // Write the episode names to a TXT file
             WriteAllLines(PathToListTXT, result);
 
-            // Clean the CSV file
+            // Delete the CSV file
             CleanCSV();
 
             // Check if the TXT file was created successfully
@@ -361,7 +361,7 @@ namespace Renamer
             }
 
             return true;
-        }       
+        }
 
         private bool ConvertSelectedSeasonToTXT()
         {
@@ -416,7 +416,7 @@ namespace Renamer
             // Write the episode names to a TXT file
             WriteAllLines(PathToListTXT, result);
 
-            // Clean the CSV file
+            // Delete the CSV file
             CleanCSV();
 
             // Check if the TXT file was created successfully
@@ -495,18 +495,14 @@ namespace Renamer
             }
 
             // Open a stream for writing to the file
-            using (var stream = File.OpenWrite(path))
-            {
-                // Set the length of the stream to 0
-                stream.SetLength(0);
+            using var stream = File.OpenWrite(path);
+            // Set the length of the stream to 0
+            stream.SetLength(0);
 
-                // Create a StreamWriter to write to the stream
-                using (var writer = new StreamWriter(stream))
-                {
-                    // Write all the lines to the stream
-                    writer.Write(string.Join(Environment.NewLine, lines));
-                }
-            }
+            // Create a StreamWriter to write to the stream
+            using var writer = new StreamWriter(stream);
+            // Write all the lines to the stream
+            writer.Write(string.Join(Environment.NewLine, lines));
         }
 
         #endregion Private()

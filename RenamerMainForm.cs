@@ -1,8 +1,10 @@
+using JR.Utils.GUI.Forms;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace Renamer
 {
+
     public partial class RenamerMainForm : Form
     {
         #region Felder
@@ -31,15 +33,15 @@ namespace Renamer
         public RenamerMainForm()
         {
             InitializeComponent();
-            TxB_SeriesSearch.ForeColor = Color.Gray;
-            TxB_SeriesSearch.Text = TutMsg;
-            TxB_FileExtension.ForeColor = Color.Gray;   
-            TxB_FileExtension.Text = FileExtension;
             gui = this;
             AppDir = (AppDomain.CurrentDomain.BaseDirectory);
             PathToListTXT = (AppDir + "\\list.txt");
             PathToListCSV = (AppDir + "\\list.csv");
             PathToAllShowCSV = (AppDir + "\\allshows.csv");
+            TxB_SeriesSearch.ForeColor = Color.Gray;
+            TxB_SeriesSearch.Text = TutMsg;
+            TxB_FileExtension.ForeColor = Color.Gray;
+            TxB_FileExtension.Text = FileExtension;
         }
 
         #endregion Konstruktor
@@ -149,7 +151,7 @@ namespace Renamer
             }
 
             try
-            {   
+            {
                 await DownloadWebFile(PathAllShowtxt, PathToAllShowCSV);
                 if (!CSVParser.CheckforFiles(PathToAllShowCSV))
                 {
@@ -273,75 +275,65 @@ namespace Renamer
             {
                 MessageBox.Show(ex.Message);
             }
-            
+
             GuiActivated(true);
         }
 
         private void Btn_RenameFilesWithList_Click(object sender, EventArgs e)
         {
+            //Dectivate GUI elements
             GuiActivated(false);
 
+            //check if the series name and season number have been entered by the user
             if (string.IsNullOrWhiteSpace(TxB_SeriesSearch.Text) || string.IsNullOrWhiteSpace(CmB_SelectSeason.Text))
             {
                 GuiActivated(true);
+                //output error message if series name or season number is missing
                 Cout(RenameSTitelErrorMsg);
                 return;
             }
 
+            //Check if list file exists
             if (!CSVParser.CheckforFiles(PathToListTXT))
             {
                 GuiActivated(true);
+                //output error message if list file is missing
                 Cout(NoListFoundErrorMsg);
                 return;
             }
 
+            //calculate the season number in the format "S01" or "S02" etc.
             int sNr = CmB_SelectSeason.SelectedIndex + 1;
-            string sNumber;
+            string sNumber = sNr <= 9 ? "0" + Convert.ToString(sNr) : Convert.ToString(sNr);
 
-            if (sNr <= 9)
-            {
-                sNumber = "0" + Convert.ToString(sNr);
-            }
-            else
-            {
-                sNumber = Convert.ToString(sNr);
-            }
-
+            //create a preview of the new file names using the series name, season number, and file extension
             List<string> fileName = FileNameHandler.FileNamePreview(TxB_SeriesSearch.Text, sNumber, GetFileExtension());
             var message = string.Join(Environment.NewLine, fileName);
 
+            //check if there are any files that match the search criteria
             if (string.IsNullOrEmpty(message) || string.IsNullOrWhiteSpace(message))
             {
                 Cout(NoFilesFoundMsg);
                 GuiActivated(true);
-                return; 
+                return;
             }
 
-            DialogResult dialogResult = MessageBox.Show(message, DialogBoxTitel, MessageBoxButtons.YesNo);
+            //show a dialog box displaying the new file names for confirmation
+            DialogResult dialogResult = FlexibleMessageBox.Show(message, DialogBoxTitel, MessageBoxButtons.YesNo);
 
+            //if the user confirms, rename the files
             if (dialogResult == DialogResult.Yes)
             {
-                if (sNr <= 9)
-                {
-                    string seasonNr = "0" + Convert.ToString(sNr);
-                    FileNameHandler.RenameFilesWithList(TxB_SeriesSearch.Text, seasonNr, GetFileExtension());
-                    Cout(RenameSuccessMsg);
-                }
-                else
-                {
-                    string seasonNr = Convert.ToString(sNr);
-                    FileNameHandler.RenameFilesWithList(TxB_SeriesSearch.Text, seasonNr, GetFileExtension());
-                    Cout(RenameSuccessMsg);
-                }
-
-                GuiActivated(true);
+                FileNameHandler.RenameFilesWithList(TxB_SeriesSearch.Text, sNumber, GetFileExtension());
+                Cout(RenameSuccessMsg);
             }
+            //if the user cancels, don't rename the files
             else if (dialogResult == DialogResult.No)
             {
                 GuiActivated(true);
                 return;
             }
-
+            //activate GUI elements
             GuiActivated(true);
         }
 
@@ -381,7 +373,7 @@ namespace Renamer
 
         #region Private()
 
-        private static void SetProgressBarValue(int progressPercentage, long totalFileSize, long totalBytesDownloaded)
+        private static void SetProgressBarValue(int progressPercentage, long _1, long _2)
         {
             if (gui.PgB_Main.InvokeRequired)
             {
@@ -405,13 +397,13 @@ namespace Renamer
 
         private static async Task DownloadWebFile(string url, string fullPath)
         {
-             using var client = new DownloadManager(url, fullPath);
-                client.ProgressChanged += (totalFileSize, totalBytesDownloaded, progressPercentage) =>
-                {
-                    SetProgressBarValue((int)progressPercentage, (long)totalFileSize, totalBytesDownloaded);
-                };
+            using var client = new DownloadManager(url, fullPath);
+            client.ProgressChanged += (totalFileSize, totalBytesDownloaded, progressPercentage) =>
+            {
+                SetProgressBarValue((int)progressPercentage, (long)totalFileSize, totalBytesDownloaded);
+            };
 
-            await client.StartDownload();            
+            await client.StartDownload();
         }
 
         private static void GuiActivated(bool state)
@@ -467,7 +459,7 @@ namespace Renamer
                 // TxB_FileExtension.Text is not 3 characters long or contains characters that are not letters or numbers
                 TxB_FileExtension.ForeColor = Color.Gray;
                 TxB_FileExtension.Text = FileExtension;
-                result = ".mkv";
+                result = "." + FileExtension;
             }
 
             return result;
@@ -475,7 +467,5 @@ namespace Renamer
         }
 
         #endregion Private()
-
-        
     }
 }
